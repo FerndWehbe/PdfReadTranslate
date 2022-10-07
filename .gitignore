@@ -122,3 +122,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+#Text files 
+pdfs/*
+
+#Poetry
+poetry.lock
+pyproject.toml

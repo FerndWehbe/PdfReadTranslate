@@ -69,7 +69,7 @@ class Translate:
     def translator(
         self,
         sentenses: list,
-        verbose: bool,
+        verbose: bool = False,
         source_lang: str = "en",
         target_lang: str = "pt",
     ) -> list:
@@ -87,7 +87,7 @@ class Translate:
     def parallel(
         self,
         sentenses: list,
-        num_process: int,
+        num_process: int = 2,
         source_lang: str = "en",
         target_lang: str = "pt",
     ):
@@ -99,8 +99,14 @@ class Translate:
                 )
                 for chunck in chunks
             ]
-        return chain([result.result() for result in process])
+        return list(
+            chain.from_iterable([result.result() for result in process])
+        )
 
-    def save_to_file(self, path_file: str = "translated.txt") -> None:
+    def save_to_file(
+        self, path_file: str = "translated.txt", file_data: list = None
+    ) -> None:
+        if file_data is not None:
+            self.text_translated = file_data
         with open(path_file, "w", encoding="utf-8") as f:
             f.write("\n".join(self.text_translated))
